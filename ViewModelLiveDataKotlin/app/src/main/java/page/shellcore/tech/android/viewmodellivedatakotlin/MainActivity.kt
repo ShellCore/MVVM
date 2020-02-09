@@ -1,9 +1,10 @@
 package page.shellcore.tech.android.viewmodellivedatakotlin
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import page.shellcore.tech.android.viewmodellivedatakotlin.ui.LiveDataActivity
 import page.shellcore.tech.android.viewmodellivedatakotlin.ui.UserViewModelActivity
 import page.shellcore.tech.android.viewmodellivedatakotlin.ui.ViewModelActivity
 
@@ -30,6 +31,15 @@ class MainActivity : AppCompatActivity() {
                 Intent(
                     applicationContext,
                     UserViewModelActivity::class.java
+                )
+            )
+        }
+
+        btnLiveData.setOnClickListener {
+            startActivity(
+                Intent(
+                    applicationContext,
+                    LiveDataActivity::class.java
                 )
             )
         }
