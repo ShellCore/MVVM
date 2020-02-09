@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import page.shellcore.tech.android.viewmodellivedatakotlin.ui.DataBindingActivity
-import page.shellcore.tech.android.viewmodellivedatakotlin.ui.LiveDataActivity
-import page.shellcore.tech.android.viewmodellivedatakotlin.ui.UserViewModelActivity
-import page.shellcore.tech.android.viewmodellivedatakotlin.ui.ViewModelActivity
+import page.shellcore.tech.android.viewmodellivedatakotlin.ui.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,6 +47,14 @@ class MainActivity : AppCompatActivity() {
                 Intent(
                     applicationContext,
                     DataBindingActivity::class.java
+                )
+            )
+        }
+        btnDataBindingLiveData.setOnClickListener {
+            startActivity(
+                Intent(
+                    applicationContext,
+                    DataBindingLiveDataActivity::class.java
                 )
             )
         }
