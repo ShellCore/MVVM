@@ -25,6 +25,8 @@ class DataBindingLiveDataActivity : AppCompatActivity() {
         binding.vm = viewModel
 
         val user = User("Cesar", 32)
+        val show = true
         viewModel.setUser(user)
+        viewModel.setShowed(show)
     }
 }

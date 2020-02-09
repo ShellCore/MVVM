@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="page.shellcore.tech.android.viewmodellivedatakotlin.viewmodel.DataBindingLiveDataViewModel" />
@@ -16,47 +17,52 @@
         tools:context=".ui.DataBindingLiveDataActivity">
 
         <TextView
-            android:text="@{vm.user.name}"
-            android:id="@+id/textView"
+            android:id="@+id/txtName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@{vm.user.name}"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:showVisible="@{vm.showed}"
+            tools:text="Cesar" />
 
         <TextView
-            android:text="@{Integer.toString(vm.user.age)}"
-            android:id="@+id/textView3"
+            android:id="@+id/txtAge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:text="@{Integer.toString(vm.user.age)}"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/txtName"
+            app:showVisible="@{vm.showed}"
+            tools:text="32" />
 
         <Button
-            android:onClick="@{()->vm.updateUser()}"
-            android:id="@+id/button"
+            android:id="@+id/btnUpdateUser"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:onClick="@{()->vm.updateUser()}"
             android:text="Actualizar usuario"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/txtAge" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnChangeVisibility"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:onClick="@{()->vm.changeVisibility()}"
             android:text="Visibilidad"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintTop_toBottomOf="@+id/btnUpdateUser" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
