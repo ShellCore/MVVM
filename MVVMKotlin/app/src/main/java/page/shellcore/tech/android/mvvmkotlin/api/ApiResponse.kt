@@ -79,5 +79,5 @@ data class ApiSuccessResponse<T>(
 }
 
 data class ApiErrorResponse<T>(
-    val errorString: String
+    val errorMessage: String
 ) : ApiResponse<T>()
