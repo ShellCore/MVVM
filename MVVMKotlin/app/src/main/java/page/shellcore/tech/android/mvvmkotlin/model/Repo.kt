@@ -30,4 +30,8 @@ data class Repo(
     val owner: Owner,
     @SerializedName("stargazers_count")
     val stargazersCount: Int
-)
+) {
+    companion object {
+        const val UNKNOWN_ID = -1
+    }
+}
