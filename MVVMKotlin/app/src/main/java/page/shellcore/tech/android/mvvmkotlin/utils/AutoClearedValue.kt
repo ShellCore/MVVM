@@ -8,7 +8,7 @@ import java.lang.IllegalStateException
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Fragment, T> {
+class AutoClearedValue<T : Any>(fragment: Fragment) : ReadWriteProperty<Fragment, T> {
 
     private var _value: T? = null
 
