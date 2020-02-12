@@ -50,7 +50,7 @@ class RepoReposity @Inject constructor(
             override fun createCall(): LiveData<ApiResponse<Repo>> = githubApi.getRepo(owner, name)
         }.asLiveData()
 
-    fun loadControbutors(owner: String, name: String): LiveData<Resource<List<Contributor>>> =
+    fun loadContributors(owner: String, name: String): LiveData<Resource<List<Contributor>>> =
         object : NetworkBoundResource<List<Contributor>, List<Contributor>>(appExecutors) {
             override fun saveCallResult(item: List<Contributor>) {
                 item.forEach {
