@@ -9,6 +9,6 @@ import page.shellcore.tech.android.mvvmkotlin.db.GithubTypeConverters
 class RepoSearchResult(
     val next: Int?,
     val query: String,
-    val reporIds: List<Int>,
+    val repoIds: List<Int>,
     val totalCount: Int
 )

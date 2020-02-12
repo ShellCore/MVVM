@@ -96,7 +96,7 @@ class RepoReposity @Inject constructor(
                 val reposIds = item.items.map { it.id }
                 val repoSearchResult = RepoSearchResult(
                     query = query,
-                    reporIds = reposIds,
+                    repoIds = reposIds,
                     totalCount = item.totalCount,
                     next = item.nextPage
                 )
@@ -113,7 +113,7 @@ class RepoReposity @Inject constructor(
                     if (searchData == null) {
                         AbsentLiveData.create()
                     } else {
-                        repoDao.loadOrdered(searchData.reporIds)
+                        repoDao.loadOrdered(searchData.repoIds)
                     }
                 }
 
