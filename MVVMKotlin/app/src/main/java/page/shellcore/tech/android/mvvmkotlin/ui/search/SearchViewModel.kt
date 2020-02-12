@@ -1,15 +1,54 @@
 package page.shellcore.tech.android.mvvmkotlin.ui.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import page.shellcore.tech.android.mvvmkotlin.model.Repo
 import page.shellcore.tech.android.mvvmkotlin.repository.RepoReposity
 import page.shellcore.tech.android.mvvmkotlin.repository.Resource
 import page.shellcore.tech.android.mvvmkotlin.repository.Status
+import page.shellcore.tech.android.mvvmkotlin.utils.AbsentLiveData
+import java.util.*
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(repoReposity: RepoReposity) : ViewModel() {
+
+    private val query = MutableLiveData<String>()
+    private val nextPageHandler = NextPageHandler(repoReposity)
+
+    val result: LiveData<Resource<List<Repo>>> = Transformations.switchMap(query) { search ->
+        if (search.isNullOrEmpty()) {
+            AbsentLiveData.create()
+        } else {
+            repoReposity.search(search)
+        }
+    }
+
+    val loadMoreState: LiveData<LoadMoreState>
+        get() = nextPageHandler.loadMoreState
+
+    fun setQuery(originalInput: String) {
+        val input = originalInput.toLowerCase(Locale.getDefault())
+            .trim()
+        if (input==query.value) {
+            return
+        }
+        nextPageHandler.reset()
+        query.value = input
+    }
+
+    fun loadNextPage() {
+        query.value?.let {
+            if (it.isNotBlank()) {
+                nextPageHandler.queryNextPage(it)
+            }
+        }
+    }
+
+    fun refresh() {
+        query.value?.let {
+            query.value = it
+        }
+    }
 
     class LoadMoreState(val isRunning: Boolean, val errorMessage: String?) {
 
@@ -58,7 +97,8 @@ class SearchViewModel @Inject constructor(repoReposity: RepoReposity) : ViewMode
                             errorMessage = result.message
                         )
                     }
-                    Status.LOADING -> {}
+                    Status.LOADING -> {
+                    }
                 }
             }
         }
@@ -77,7 +117,7 @@ class SearchViewModel @Inject constructor(repoReposity: RepoReposity) : ViewMode
             nextPageLiveData?.observeForever(this)
         }
 
-        private fun reset() {
+        fun reset() {
             unregister()
             _hasMore = true
             loadMoreState.value = LoadMoreState(
@@ -94,6 +134,4 @@ class SearchViewModel @Inject constructor(repoReposity: RepoReposity) : ViewMode
             }
         }
     }
-
-
 }
