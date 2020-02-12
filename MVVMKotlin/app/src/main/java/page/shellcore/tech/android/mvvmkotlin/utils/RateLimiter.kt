@@ -28,7 +28,7 @@ class RateLimiter<in KEY>(timeout: Int, timeUnit: TimeUnit) {
     }
 
     @Synchronized
-    fun reseet(key: KEY) {
+    fun reset(key: KEY) {
         timestamps.remove(key)
     }
 
