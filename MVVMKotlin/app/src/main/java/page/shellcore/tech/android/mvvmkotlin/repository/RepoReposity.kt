@@ -1,14 +1,15 @@
 package page.shellcore.tech.android.mvvmkotlin.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import page.shellcore.tech.android.mvvmkotlin.AppExecutors
 import page.shellcore.tech.android.mvvmkotlin.api.ApiResponse
+import page.shellcore.tech.android.mvvmkotlin.api.ApiSuccessResponse
 import page.shellcore.tech.android.mvvmkotlin.api.GithubApi
 import page.shellcore.tech.android.mvvmkotlin.db.GithubDB
 import page.shellcore.tech.android.mvvmkotlin.db.RepoDao
-import page.shellcore.tech.android.mvvmkotlin.model.Contributor
-import page.shellcore.tech.android.mvvmkotlin.model.Owner
-import page.shellcore.tech.android.mvvmkotlin.model.Repo
+import page.shellcore.tech.android.mvvmkotlin.model.*
+import page.shellcore.tech.android.mvvmkotlin.utils.AbsentLiveData
 import page.shellcore.tech.android.mvvmkotlin.utils.RateLimiter
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -87,5 +88,41 @@ class RepoReposity @Inject constructor(
         appExecutors.networkIO()
             .execute(fetchNextSearchPageTask)
         return fetchNextSearchPageTask.liveData
+    }
+
+    fun search(query: String): LiveData<Resource<List<Repo>>> {
+        return object : NetworkBoundResource<List<Repo>, RepoSearchResponse>(appExecutors) {
+            override fun saveCallResult(item: RepoSearchResponse) {
+                val reposIds = item.items.map { it.id }
+                val repoSearchResult = RepoSearchResult(
+                    query = query,
+                    reporIds = reposIds,
+                    totalCount = item.totalCount,
+                    next = item.nextPage
+                )
+                db.runInTransaction {
+                    repoDao.insertRepos(item.items)
+                    repoDao.insert(repoSearchResult)
+                }
+            }
+
+            override fun shouldFetch(data: List<Repo>?): Boolean = data == null
+
+            override fun loadFromDb(): LiveData<List<Repo>> =
+                Transformations.switchMap(repoDao.search(query)) {searchData ->
+                    if (searchData == null) {
+                        AbsentLiveData.create()
+                    } else {
+                        repoDao.loadOrdered(searchData.reporIds)
+                    }
+                }
+
+            override fun createCall(): LiveData<ApiResponse<RepoSearchResponse>> =
+                githubApi.searchRepos(query)
+
+            override fun processResponse(response: ApiSuccessResponse<RepoSearchResponse>): RepoSearchResponse =
+                response.body.apply { nextPage = response.nextPage }
+        }.asLiveData()
+
     }
 }
