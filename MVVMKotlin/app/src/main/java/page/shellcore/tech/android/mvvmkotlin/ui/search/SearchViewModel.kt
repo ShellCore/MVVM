@@ -14,6 +14,7 @@ class SearchViewModel @Inject constructor(repoReposity: RepoReposity) : ViewMode
 
     private val query = MutableLiveData<String>()
     private val nextPageHandler = NextPageHandler(repoReposity)
+    val queryLD: LiveData<String> = query
 
     val result: LiveData<Resource<List<Repo>>> = Transformations.switchMap(query) { search ->
         if (search.isNullOrEmpty()) {

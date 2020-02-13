@@ -19,7 +19,7 @@
 
         <variable
             name="query"
-            type="String" />
+            type="androidx.lifecycle.LiveData&lt;String>" />
 
         <variable
             name="loadingMore"
@@ -32,6 +32,10 @@
         <variable
             name="callback"
             type="page.shellcore.tech.android.mvvmkotlin.ui.common.RetryCallback" />
+
+        <variable
+            name="searchResult"
+            type="androidx.lifecycle.LiveData&lt;Resource&lt;List&lt;Repo>>>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,40 +68,40 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilSearch"
-            tools:listitem="@layout/item_repo" >
+            tools:listitem="@layout/item_repo">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <ProgressBar
-            app:visibleGone="@{loadingMore}"
             android:id="@+id/prgHorizontal"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:visibleGone="@{loadingMore}" />
 
         <include
             layout="@layout/loading_state"
-            app:resource="@{searchResource}"
-            app:callback="@{() -> callback.retry()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:callback="@{() -> callback.retry()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilSearch" />
+            app:layout_constraintTop_toBottomOf="@+id/tilSearch"
+            app:resource="@{searchResource}" />
 
         <TextView
             android:id="@+id/txtNoResults"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:visibleGone="@{searchResource.status == Status.SUCCESS}"
             android:text="@{@string/empty_search_result(query)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilSearch" />
+            app:layout_constraintTop_toBottomOf="@+id/tilSearch"
+            app:visibleGone="@{searchResult.status == Status.SUCCESS &amp;&amp; searchResult.data.size == 0}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
