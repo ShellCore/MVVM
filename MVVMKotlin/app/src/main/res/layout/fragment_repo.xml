@@ -49,7 +49,7 @@
                     android:id="@+id/txtUserName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{string/repo_full_name(repo.owner.login, repo.name)}"
+                    android:text="@{@string/repo_full_name(repo.owner.login, repo.name)}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

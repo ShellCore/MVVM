@@ -14,6 +14,12 @@ import page.shellcore.tech.android.mvvmkotlin.GithubApp
 object AppInjector {
 
     fun init(githubApp: GithubApp) {
+
+        DaggerAppComponent.builder()
+            .application(githubApp)
+            .build()
+            .inject(githubApp)
+
         githubApp.registerActivityLifecycleCallbacks(object :
             Application.ActivityLifecycleCallbacks {
             override fun onActivityPaused(activity: Activity) {}

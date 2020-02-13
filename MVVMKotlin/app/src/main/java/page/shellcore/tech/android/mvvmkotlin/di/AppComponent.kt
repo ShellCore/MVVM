@@ -1,7 +1,6 @@
 package page.shellcore.tech.android.mvvmkotlin.di
 
 import android.app.Application
-import dagger.Binds
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

@@ -10,7 +10,7 @@ data class User(
     @SerializedName("blog")
     val blog: String,
     @SerializedName("company")
-    val company: Any,
+    val company: String,
     @SerializedName("login")
     val login: String,
     @SerializedName("name")
