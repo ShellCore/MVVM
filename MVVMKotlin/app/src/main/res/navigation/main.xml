@@ -37,7 +37,7 @@
         android:label="RepoFragment"
         tools:layout="@layout/fragment_repo">
         <action
-            android:id="@+id/action_repoFragment_to_userFragment2"
+            android:id="@+id/action_repoFragment_to_userFragment"
             app:destination="@id/userFragment" />
         <argument
             android:name="name"
