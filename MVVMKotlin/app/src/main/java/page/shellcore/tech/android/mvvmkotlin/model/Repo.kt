@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName
 )
 data class Repo(
     @field:SerializedName("description")
-    val description: String,
+    val description: String?,
     @field:SerializedName("full_name")
     val fullName: String,
     @field:SerializedName("id")

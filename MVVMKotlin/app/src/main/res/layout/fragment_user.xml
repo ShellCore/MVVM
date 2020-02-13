@@ -5,7 +5,6 @@
 
     <data>
 
-
         <variable
             name="user"
             type="page.shellcore.tech.android.mvvmkotlin.model.User" />
@@ -72,6 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
+            app:layoutManager="LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,13 +80,13 @@
 
         <include
             layout="@layout/loading_state"
-            app:resource="@{userResource}"
-            app:callback="@{() -> retryCallback.retry()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:callback="@{() -> retryCallback.retry()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:resource="@{userResource}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

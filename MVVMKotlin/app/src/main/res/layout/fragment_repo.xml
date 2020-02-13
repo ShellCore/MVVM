@@ -75,6 +75,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
+            app:layoutManager="LinearLayoutManager"
             android:id="@+id/recContributors"
             android:layout_width="0dp"
             android:layout_height="0dp"

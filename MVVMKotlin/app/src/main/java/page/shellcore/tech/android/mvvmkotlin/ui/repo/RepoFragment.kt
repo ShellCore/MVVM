@@ -2,7 +2,6 @@ package page.shellcore.tech.android.mvvmkotlin.ui.repo
 
 
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +35,6 @@ class RepoFragment : Fragment(), Injectable {
     lateinit var appExecutors: AppExecutors
 
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
-
     var binding by autoCleared<FragmentRepoBinding>()
 
     private val params by navArgs<RepoFragmentArgs>()
@@ -59,9 +57,6 @@ class RepoFragment : Fragment(), Injectable {
         }
 
         binding = dataBinding
-        sharedElementEnterTransition = TransitionInflater.from(context)
-            .inflateTransition(R.transition.move)
-
         return dataBinding.root
     }
 
@@ -73,18 +68,13 @@ class RepoFragment : Fragment(), Injectable {
         val adapter = ContributorAdapter(dataBindingComponent, appExecutors) { contributor ->
             findNavController().navigate(
                 RepoFragmentDirections.actionRepoFragmentToUserFragment(
-                    contributor.login,
-                    contributor.avatarUrl
+                    contributor.avatarUrl,
+                    contributor.login
                 )
             )
         }
         this.adapter = adapter
         binding.recContributors.adapter = adapter
-        postponeEnterTransition()
-        binding.recContributors.viewTreeObserver.addOnPreDrawListener {
-            startPostponedEnterTransition()
-            true
-        }
         initContributorList(repoViewModel)
     }
 

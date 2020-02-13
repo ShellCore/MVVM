@@ -16,7 +16,6 @@ class UserViewModel @Inject constructor(
     userRepository: UserRepository,
     repoReposity: RepoReposity
 ) : ViewModel() {
-
     private val _login = MutableLiveData<String>()
     val login: LiveData<String>
         get() = _login
@@ -38,7 +37,7 @@ class UserViewModel @Inject constructor(
     }
 
     fun setLogin(login: String?) {
-        if (_login.value != null) {
+        if (_login.value != login) {
             _login.value = login
         }
     }

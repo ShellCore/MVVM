@@ -4,11 +4,9 @@ package page.shellcore.tech.android.mvvmkotlin.ui.user
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.postDelayed
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -65,13 +63,6 @@ class UserFragment : Fragment(), Injectable {
         }
 
         binding = dataBinding
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.move)
-
-        handler.postDelayed(100) {
-            startPostponedEnterTransition()
-        }
-        postponeEnterTransition()
         return dataBinding.root
     }
 
@@ -80,7 +71,7 @@ class UserFragment : Fragment(), Injectable {
         val params = UserFragmentArgs.fromBundle(arguments!!)
         userViewModel.setLogin(params.login)
         userViewModel.user.observe(viewLifecycleOwner, Observer { userResource ->
-            binding.user = userResource.data
+            binding.user = userResource?.data
             binding.userResource = userResource
         })
 
@@ -91,14 +82,13 @@ class UserFragment : Fragment(), Injectable {
         ) { repo ->
             findNavController().navigate(
                 UserFragmentDirections.actionUserFragmentToRepoFragment(
-                    repo.owner.login,
-                    repo.name
+                    repo.name,
+                    repo.owner.login
                 )
             )
         }
         binding.recRepos.adapter = rvAdapter
         this.adapter = rvAdapter
-
         initRepoList()
     }
 

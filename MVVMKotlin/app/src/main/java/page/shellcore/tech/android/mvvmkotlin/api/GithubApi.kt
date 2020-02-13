@@ -1,7 +1,10 @@
 package page.shellcore.tech.android.mvvmkotlin.api
 
 import androidx.lifecycle.LiveData
-import page.shellcore.tech.android.mvvmkotlin.model.*
+import page.shellcore.tech.android.mvvmkotlin.model.Contributor
+import page.shellcore.tech.android.mvvmkotlin.model.Repo
+import page.shellcore.tech.android.mvvmkotlin.model.RepoSearchResponse
+import page.shellcore.tech.android.mvvmkotlin.model.User
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -9,7 +12,7 @@ import retrofit2.http.Query
 
 interface GithubApi {
 
-    @GET("user/{login}")
+    @GET("users/{login}")
     fun getUser(@Path("login")login: String): LiveData<ApiResponse<User>>
 
     @GET("users/{login}/repos")

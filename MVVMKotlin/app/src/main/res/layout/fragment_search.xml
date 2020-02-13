@@ -60,6 +60,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            app:layoutManager="LinearLayoutManager"
             android:id="@+id/reposSearched"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -91,7 +92,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilSearch"
-            app:resource="@{searchResource}" />
+            app:resource="@{(Resource) searchResult}" />
 
         <TextView
             android:id="@+id/txtNoResults"

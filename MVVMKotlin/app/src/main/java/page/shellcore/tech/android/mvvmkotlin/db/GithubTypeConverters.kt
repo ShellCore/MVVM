@@ -20,5 +20,5 @@ object GithubTypeConverters {
 
     @TypeConverter
     @JvmStatic
-    fun intListToString(ints: List<Int>?): String? = ints?.joinToString { "," }
+    fun intListToString(ints: List<Int>?): String? = ints?.joinToString(",")
 }
