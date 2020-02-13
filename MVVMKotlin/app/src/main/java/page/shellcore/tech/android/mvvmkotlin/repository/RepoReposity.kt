@@ -90,8 +90,8 @@ class RepoReposity @Inject constructor(
         return fetchNextSearchPageTask.liveData
     }
 
-    fun search(query: String): LiveData<Resource<List<Repo>>> {
-        return object : NetworkBoundResource<List<Repo>, RepoSearchResponse>(appExecutors) {
+    fun search(query: String): LiveData<Resource<List<Repo>>> =
+        object : NetworkBoundResource<List<Repo>, RepoSearchResponse>(appExecutors) {
             override fun saveCallResult(item: RepoSearchResponse) {
                 val reposIds = item.items.map { it.id }
                 val repoSearchResult = RepoSearchResult(
@@ -123,6 +123,4 @@ class RepoReposity @Inject constructor(
             override fun processResponse(response: ApiSuccessResponse<RepoSearchResponse>): RepoSearchResponse =
                 response.body.apply { nextPage = response.nextPage }
         }.asLiveData()
-
-    }
 }

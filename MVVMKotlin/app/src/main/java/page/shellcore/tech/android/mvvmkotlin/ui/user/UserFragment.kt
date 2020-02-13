@@ -15,9 +15,7 @@ class UserFragment : Fragment(), Injectable {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_user, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_user, container, false)
 
 
 }

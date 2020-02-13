@@ -48,12 +48,11 @@ class RepoViewModel @Inject constructor(
     }
 
     data class RepoId(val owner: String, val name:String) {
-        fun<T> ifExists(f: (String, String) -> LiveData<T>): LiveData<T> {
-            return if(owner.isBlank() || name.isBlank()) {
+        fun<T> ifExists(f: (String, String) -> LiveData<T>): LiveData<T> =
+            if(owner.isBlank() || name.isBlank()) {
                 AbsentLiveData.create()
             } else {
                 f(owner, name)
             }
-        }
     }
 }

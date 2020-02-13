@@ -22,32 +22,25 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideGithubApi(): GithubApi {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(LiveDataCallAdapterFactory())
-            .build()
-            .create(GithubApi::class.java)
-    }
+    fun provideGithubApi(): GithubApi = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(LiveDataCallAdapterFactory())
+        .build()
+        .create(GithubApi::class.java)
 
     @Singleton
     @Provides
-    fun providesDb(app: Application): GithubDB {
-        return Room.databaseBuilder(app, GithubDB::class.java, "github.db")
+    fun providesDb(app: Application): GithubDB =
+        Room.databaseBuilder(app, GithubDB::class.java, "github.db")
             .fallbackToDestructiveMigration()
             .build()
-    }
 
     @Singleton
     @Provides
-    fun providesUserDao(db: GithubDB): UserDao {
-        return db.userDao()
-    }
+    fun providesUserDao(db: GithubDB): UserDao = db.userDao()
 
     @Singleton
     @Provides
-    fun providesRepoDao(db: GithubDB): RepoDao {
-        return db.repoDao()
-    }
+    fun providesRepoDao(db: GithubDB): RepoDao = db.repoDao()
 }

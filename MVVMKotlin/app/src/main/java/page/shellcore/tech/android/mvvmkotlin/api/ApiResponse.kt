@@ -6,27 +6,24 @@ import java.util.regex.Pattern
 sealed class ApiResponse<T> {
 
     companion object {
-        fun <T> create(error: Throwable): ApiErrorResponse<T> {
-            return ApiErrorResponse(error.message ?: "Unknown error")
-        }
+        fun <T> create(error: Throwable): ApiErrorResponse<T> =
+            ApiErrorResponse(error.message ?: "Unknown error")
 
-        fun <T> create(response: Response<T>): ApiResponse<T> {
-            return if (response.isSuccessful) {
-                val body = response.body()
-                if (body == null || response.code() == 204) {
-                    ApiEmptyResponse()
-                } else {
-                    ApiSuccessResponse(body, response.headers()["link"])
-                }
+        fun <T> create(response: Response<T>): ApiResponse<T> = if (response.isSuccessful) {
+            val body = response.body()
+            if (body == null || response.code() == 204) {
+                ApiEmptyResponse()
             } else {
-                val msg = response.errorBody()?.string()
-                val errorMessage = if (msg.isNullOrEmpty()) {
-                    response.message()
-                } else {
-                    msg
-                }
-                ApiErrorResponse(errorMessage ?: "Unknown error")
+                ApiSuccessResponse(body, response.headers()["link"])
             }
+        } else {
+            val msg = response.errorBody()?.string()
+            val errorMessage = if (msg.isNullOrEmpty()) {
+                response.message()
+            } else {
+                msg
+            }
+            ApiErrorResponse(errorMessage ?: "Unknown error")
         }
     }
 }
